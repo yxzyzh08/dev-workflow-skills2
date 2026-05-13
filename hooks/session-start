@@ -1,0 +1,58 @@
+#!/usr/bin/env bash
+# SessionStart hook for dev-workflow-skills plugin.
+#
+# Injects skills/using-dev-workflow/SKILL.md into the new session as
+# additionalContext, so the agent knows to detect progress.md state and
+# route to project-init / scenario-dispatcher / stage-skill / bug-triage /
+# workflow-evolution before doing anything else.
+
+set -euo pipefail
+
+# Determine plugin root directory (the repo / installed plugin path).
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+PLUGIN_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
+
+# Read the bootstrap skill content. Fail soft: if the file is missing the
+# plugin still loads, just without the auto-routing reminder.
+bootstrap_path="${PLUGIN_ROOT}/skills/using-dev-workflow/SKILL.md"
+if [ ! -f "$bootstrap_path" ]; then
+    bootstrap_content="<warning>using-dev-workflow skill missing at ${bootstrap_path}; plugin install may be incomplete.</warning>"
+else
+    bootstrap_content=$(cat "$bootstrap_path")
+fi
+
+# Escape string for JSON embedding using bash parameter substitution.
+# Each ${s//old/new} is a single C-level pass — orders of magnitude
+# faster than the character-by-character loop this replaces.
+escape_for_json() {
+    local s="$1"
+    s="${s//\\/\\\\}"
+    s="${s//\"/\\\"}"
+    s="${s//$'\n'/\\n}"
+    s="${s//$'\r'/\\r}"
+    s="${s//$'\t'/\\t}"
+    printf '%s' "$s"
+}
+
+bootstrap_escaped=$(escape_for_json "$bootstrap_content")
+session_context="<EXTREMELY_IMPORTANT>\nThe dev-workflow-skills plugin is active in this session.\n\nBelow is the full content of the 'dev-workflow-skills:using-dev-workflow' skill — your routing entry point. Read it before responding. For all other skills (project-init / scenario-dispatcher / *-write / *-review / bug-triage / workflow-evolution / workflow-protocol / doc-guardian), use the 'Skill' tool.\n\n${bootstrap_escaped}\n</EXTREMELY_IMPORTANT>"
+
+# Output context injection as JSON.
+# Cursor hooks expect additional_context (snake_case).
+# Claude Code hooks expect hookSpecificOutput.additionalContext (nested).
+# Copilot CLI (v1.0.11+) and others expect additionalContext (top-level, SDK standard).
+#
+# Uses printf instead of heredoc to work around bash 5.3+ heredoc hang.
+# (Same workaround pattern as upstream superpowers plugin.)
+if [ -n "${CURSOR_PLUGIN_ROOT:-}" ]; then
+  # Cursor sets CURSOR_PLUGIN_ROOT (may also set CLAUDE_PLUGIN_ROOT).
+  printf '{\n  "additional_context": "%s"\n}\n' "$session_context"
+elif [ -n "${CLAUDE_PLUGIN_ROOT:-}" ] && [ -z "${COPILOT_CLI:-}" ]; then
+  # Claude Code sets CLAUDE_PLUGIN_ROOT without COPILOT_CLI.
+  printf '{\n  "hookSpecificOutput": {\n    "hookEventName": "SessionStart",\n    "additionalContext": "%s"\n  }\n}\n' "$session_context"
+else
+  # Copilot CLI (sets COPILOT_CLI=1) or unknown platform — SDK standard format.
+  printf '{\n  "additionalContext": "%s"\n}\n' "$session_context"
+fi
+
+exit 0

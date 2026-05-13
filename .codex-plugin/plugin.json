@@ -1,0 +1,46 @@
+{
+  "name": "dev-workflow-skills",
+  "version": "0.1.0",
+  "description": "7-stage product workflow skill set: PRD → SRS → Architecture → Development → Testing → Delivery → Retrospective. Manages each project via progress.md state machines (progress.py) and doc-guardian validation (validate.py). Supports 4 scenarios (S1 new product, S2 feature evolution, S3 reconstruction, S4 bug fix) plus Bug Flow and Incident Flow.",
+  "author": {
+    "name": "yxzyzh08",
+    "email": "12328505@qq.com",
+    "url": "https://github.com/yxzyzh08"
+  },
+  "homepage": "https://github.com/yxzyzh08/dev-workflow-skills2",
+  "repository": "https://github.com/yxzyzh08/dev-workflow-skills2",
+  "license": "MIT",
+  "keywords": [
+    "workflow",
+    "skills",
+    "prd",
+    "srs",
+    "architecture",
+    "development",
+    "testing",
+    "delivery",
+    "retrospective",
+    "bug-flow",
+    "incident-flow"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Dev Workflow",
+    "shortDescription": "7-stage workflow with PRD / SRS / Architecture / Dev / Test / Delivery / Retrospective",
+    "longDescription": "Use Dev Workflow to manage a product project end-to-end through 7 stages: PRD inception, SRS specification, architecture design, development, testing, delivery, and project retrospective. Each stage has dedicated write and review skills. State is tracked in progress.md via the progress.py state machine; docs are validated by doc-guardian's validate.py. Bug Flow and Incident Flow handle exceptional paths from testing failures back to the right stage. Scenario routing (S1 new product, S2 feature evolution, S3 reconstruction, S4 bug fix) is automatic via scenario-dispatcher.",
+    "developerName": "yxzyzh08",
+    "category": "Coding",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "I want to start a new product with this workflow.",
+      "Continue work on the active release.",
+      "Where am I in the workflow right now?"
+    ],
+    "brandColor": "#2563EB",
+    "screenshots": []
+  }
+}

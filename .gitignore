@@ -1,0 +1,27 @@
+# Python bytecode
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Workflow runtime artifacts (must NEVER be committed in this spec repo)
+# These are created by progress.py in downstream managed projects.
+progress.md
+progress-history.md
+.progress.lock
+
+# OS / editor
+.DS_Store
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Test / build artifacts
+.pytest_cache/
+*.egg-info/
+build/
+dist/
+
+# Plugin runtime state (per-harness)
+.claude/

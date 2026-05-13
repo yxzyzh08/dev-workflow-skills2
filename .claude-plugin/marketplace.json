@@ -1,0 +1,20 @@
+{
+  "name": "dev-workflow-skills-dev",
+  "description": "Development marketplace for the dev-workflow-skills plugin",
+  "owner": {
+    "name": "yxzyzh08",
+    "email": "12328505@qq.com"
+  },
+  "plugins": [
+    {
+      "name": "dev-workflow-skills",
+      "description": "7-stage product workflow skill set: PRD → SRS → Architecture → Development → Testing → Delivery → Retrospective; managed via progress.md and doc-guardian.",
+      "version": "0.1.0",
+      "source": "./",
+      "author": {
+        "name": "yxzyzh08",
+        "email": "12328505@qq.com"
+      }
+    }
+  ]
+}

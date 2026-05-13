@@ -1,0 +1,25 @@
+{
+  "name": "dev-workflow-skills",
+  "description": "7-stage product workflow skill set for Claude Code: PRD → SRS → Architecture → Development → Testing → Delivery → Retrospective. Manages each project via progress.md state machines and doc-guardian validation. Supports S1/S2/S3/S4 scenarios + Bug Flow + Incident Flow.",
+  "version": "0.1.0",
+  "author": {
+    "name": "yxzyzh08",
+    "email": "12328505@qq.com"
+  },
+  "homepage": "https://github.com/yxzyzh08/dev-workflow-skills2",
+  "repository": "https://github.com/yxzyzh08/dev-workflow-skills2",
+  "license": "MIT",
+  "keywords": [
+    "skills",
+    "workflow",
+    "prd",
+    "srs",
+    "architecture",
+    "development",
+    "testing",
+    "delivery",
+    "retrospective",
+    "bug-flow",
+    "incident-flow"
+  ]
+}

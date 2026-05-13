@@ -1,0 +1,13 @@
+{
+  "name": "dev-workflow-skills",
+  "version": "0.1.0",
+  "description": "7-stage product workflow skill set for Claude Code / Codex: PRD → SRS → Architecture → Development → Testing → Delivery → Retrospective. Managed via progress.md and doc-guardian.",
+  "license": "MIT",
+  "author": "yxzyzh08 <12328505@qq.com>",
+  "homepage": "https://github.com/yxzyzh08/dev-workflow-skills2",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yxzyzh08/dev-workflow-skills2.git"
+  },
+  "private": true
+}
